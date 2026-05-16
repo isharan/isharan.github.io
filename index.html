@@ -1,9 +1,1287 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gurugedara — Books for Every Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Sinhala:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --parchment: #faf6ee;
+    --cream: #f2ead8;
+    --amber: #c8820a;
+    --amber-light: #f5d98f;
+    --amber-deep: #8b5a07;
+    --rust: #9b3a1a;
+    --forest: #2c5545;
+    --forest-light: #e8f0ec;
+    --muted: #6b5c44;
+    --border: #d9cdb8;
+    --white: #ffffff;
+    --card-shadow: 0 2px 12px rgba(26,18,8,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--forest);
+    color: #b8d4c8;
+    font-size: 13px;
+    text-align: center;
+    padding: 8px 16px;
+    letter-spacing: 0.04em;
+  }
+  .topbar strong { color: var(--amber-light); }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+    height: 64px;
+  }
+  .logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-en {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--amber-light);
+    letter-spacing: 0.02em;
+  }
+  .logo-si {
+    font-family: 'Noto Serif Sinhala', serif;
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0.01em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+    flex: 1;
+  }
+  .nav-links a {
+    color: #c8bfb0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+    display: block;
+  }
+  .nav-links a:hover { color: var(--amber-light); background: rgba(255,255,255,0.06); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 6px 12px;
+    gap: 8px;
+  }
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    width: 200px;
+  }
+  .search-bar input::placeholder { color: #888; }
+  .search-bar svg { color: #888; flex-shrink: 0; }
+  .nav-icon {
+    width: 38px; height: 38px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.07);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: #c8bfb0;
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+    text-decoration: none;
+  }
+  .nav-icon:hover { background: rgba(255,255,255,0.14); color: var(--amber-light); }
+  .cart-badge {
+    position: absolute; top: 5px; right: 5px;
+    background: var(--amber); color: var(--ink);
+    font-size: 9px; font-weight: 700;
+    width: 14px; height: 14px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    min-height: 520px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(200,130,10,0.04) 40px,
+      rgba(200,130,10,0.04) 41px
+    );
+  }
+  .hero-text {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--amber);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--parchment);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { color: var(--amber-light); font-style: italic; }
+  .hero p {
+    font-size: 17px;
+    color: #9a8e7e;
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--amber);
+    color: var(--ink);
+    padding: 13px 28px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #e09900; transform: translateY(-1px); }
+  .btn-outline {
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: #c8bfb0;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--amber-light); color: var(--amber-light); }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .book-stack {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    position: relative;
+  }
+  .book-card {
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px 12px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 4px 8px 24px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+  }
+  .book-card:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 6px 16px 32px rgba(0,0,0,0.6); }
+  .book-card.tall { width: 100px; height: 180px; }
+  .book-card.mid  { width: 90px;  height: 155px; }
+  .book-card.short { width: 85px; height: 135px; }
+  .book-card.b1 { background: linear-gradient(160deg, #3a5e8c, #1e3a5f); }
+  .book-card.b2 { background: linear-gradient(160deg, #7b3a2a, #4a1f12); }
+  .book-card.b3 { background: linear-gradient(160deg, #2c5545, #163325); }
+  .book-card.b4 { background: linear-gradient(160deg, #6b4c8a, #3d2050); }
+  .book-card.b5 { background: linear-gradient(160deg, #8b6a1e, #5a4008); }
+  .book-spine {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: rgba(0,0,0,0.3);
+  }
+  .book-title-mini {
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.3;
+  }
+  .book-author-mini { font-size: 9px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+  .book-deco {
+    position: absolute;
+    top: 16px; left: 16px; right: 16px;
+    height: 2px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 1px;
+  }
+
+  /* ── CATEGORY STRIP ── */
+  .cat-strip {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+  }
+  .cat-strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cat-strip-inner::-webkit-scrollbar { display: none; }
+  .cat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 22px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    color: var(--muted);
+  }
+  .cat-item:hover { border-color: var(--amber); color: var(--amber-deep); }
+  .cat-item.active { border-color: var(--amber); color: var(--amber-deep); }
+  .cat-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .cat-label { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 64px 24px; }
+  .inner { max-width: 1200px; margin: 0 auto; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .section-title span { color: var(--amber); }
+  .see-all {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--forest);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+  .see-all:hover { gap: 10px; }
+
+  /* ── BOOK GRID ── */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 24px;
+  }
+  .book-item {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .book-cover {
+    aspect-ratio: 2/3;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 14px 12px;
+  }
+  .book-item:hover .book-cover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(26,18,8,0.18);
+  }
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%);
+  }
+  .book-cover-title {
+    position: relative;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .cover-spine {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: rgba(0,0,0,0.25);
+  }
+  .book-meta { display: flex; flex-direction: column; gap: 3px; }
+  .book-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .book-author { font-size: 12px; color: var(--muted); }
+  .book-price-row {
+    display: flex; align-items: center; gap: 8px; margin-top: 6px;
+  }
+  .book-price { font-size: 15px; font-weight: 700; color: var(--forest); }
+  .book-price-old {
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: line-through;
+  }
+  .book-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: #fde68a;
+    color: #78350f;
+  }
+  .book-badge.new { background: #d1fae5; color: #065f46; }
+  .stars { font-size: 11px; color: var(--amber); margin-top: 2px; }
+  .sold-count {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .sold-count strong { color: var(--forest); font-weight: 700; }
+  .sinhala-section .sold-count { color: #5a4a36; }
+  .sinhala-section .sold-count strong { color: var(--amber-light); }
+
+  /* ── FEATURED BANNER ── */
+  .featured-banner {
+    background: var(--forest);
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    min-height: 300px;
+    position: relative;
+  }
+  .featured-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.02) 60px,
+      rgba(255,255,255,0.02) 61px
+    );
+  }
+  .fb-content {
+    padding: 52px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .fb-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber-light);
+    margin-bottom: 16px;
+  }
+  .fb-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .fb-author { font-size: 15px; color: #7aad96; margin-bottom: 20px; }
+  .fb-desc { font-size: 15px; color: #a8c4b8; max-width: 400px; line-height: 1.6; margin-bottom: 28px; }
+  .fb-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--amber);
+    color: var(--ink);
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+    width: fit-content;
+    transition: background 0.2s;
+  }
+  .fb-cta:hover { background: #e09900; }
+  .fb-visual {
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .fb-book {
+    width: 140px; height: 210px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #c8820a, #8b5a07);
+    box-shadow: 8px 8px 32px rgba(0,0,0,0.6), -2px -2px 0 rgba(255,255,255,0.05);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    gap: 10px;
+    padding: 20px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .fb-book::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+    background: rgba(0,0,0,0.3);
+  }
+  .fb-book::after {
+    content: '';
+    position: absolute; top: 16px; left: 16px; right: 16px; height: 1.5px;
+    background: rgba(255,255,255,0.2);
+  }
+  .fb-book-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; color: rgba(255,255,255,0.9);
+    text-align: center; line-height: 1.4;
+    margin-top: 16px;
+  }
+  .fb-book-author-mini { font-size: 10px; color: rgba(255,255,255,0.5); text-align: center; }
+  .fb-price {
+    font-size: 18px; font-weight: 700; color: var(--amber-light);
+    margin-top: 8px;
+  }
+
+  /* ── PROMO CARDS ── */
+  .promos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  .promo-card {
+    border-radius: 10px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .promo-card:hover { transform: translateY(-3px); }
+  .promo-card.c1 { background: #1e3a5f; color: #fff; }
+  .promo-card.c2 { background: #4a1f12; color: #fff; }
+  .promo-card.c3 { background: var(--cream); color: var(--ink); border: 1px solid var(--border); }
+  .promo-icon { font-size: 28px; margin-bottom: 4px; }
+  .promo-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; line-height: 1.2; }
+  .promo-card.c1 .promo-desc { color: #8aadcc; font-size: 14px; }
+  .promo-card.c2 .promo-desc { color: #cc8a7a; font-size: 14px; }
+  .promo-card.c3 .promo-desc { color: var(--muted); font-size: 14px; }
+  .promo-link { font-size: 13px; font-weight: 700; color: var(--amber-light); margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+  .promo-card.c3 .promo-link { color: var(--forest); }
+
+  /* ── SINHALA BOOKS ── */
+  .sinhala-section {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+  .sinhala-section .section-title { color: var(--parchment); }
+  .sinhala-section .book-name { color: #e8d8c0; }
+  .sinhala-section .book-author { color: #7a6a54; }
+  .sinhala-section .book-price { color: var(--amber-light); }
+  .sinhala-section .see-all { color: var(--amber-light); }
+  .sinhala-section .see-all:hover { color: #fff; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--cream); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .testi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .testi-stars { font-size: 14px; color: var(--amber); margin-bottom: 12px; }
+  .testi-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .testi-author {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .testi-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .testi-city { font-size: 12px; color: var(--muted); }
+
+  /* ── NEWSLETTER ── */
+  .newsletter {
+    background: linear-gradient(135deg, var(--amber-deep) 0%, #c8820a 100%);
+    text-align: center;
+    padding: 72px 24px;
+  }
+  .newsletter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px; font-weight: 700;
+    color: #fff; margin-bottom: 12px;
+  }
+  .newsletter p { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 32px; }
+  .nl-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto; }
+  .nl-form input {
+    flex: 1;
+    padding: 13px 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    outline: none;
+    background: rgba(255,255,255,0.95);
+  }
+  .nl-form button {
+    padding: 13px 24px;
+    background: var(--ink);
+    color: var(--amber-light);
+    border: none; border-radius: 6px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  .nl-form button:hover { background: #2a1f0a; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #7a6a54;
+    padding: 56px 24px 32px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .logo-en { display: block; margin-bottom: 4px; }
+  .footer-brand p { font-size: 14px; color: #5a4a36; line-height: 1.6; margin-top: 12px; max-width: 260px; }
+  .footer-col h4 {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #c8bfb0; margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: #5a4a36; font-size: 14px; text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--amber-light); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 13px; }
+  .payment-icons { display: flex; gap: 8px; }
+  .pay-icon {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #7a6a54;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  /* Add to cart button */
+  .add-cart-btn {
+    width: 100%; margin-top: 8px;
+    padding: 8px;
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--forest);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .add-cart-btn:hover {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: #fff;
+  }
+  .sinhala-section .add-cart-btn {
+    border-color: rgba(255,255,255,0.15);
+    color: var(--amber-light);
+  }
+  .sinhala-section .add-cart-btn:hover {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--ink);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text > * {
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero h1  { animation-delay: 0.2s; }
+  .hero p   { animation-delay: 0.3s; }
+  .hero-ctas { animation-delay: 0.4s; }
+</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm Ishara Gunarathne.</p>
+
+<!-- Topbar -->
+<div class="topbar">
+  📦 <strong>Free delivery</strong> on orders over Rs. 3,000 · Island-wide shipping · Sinhala &amp; English books
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-en">Gurugedara</span>
+      <span class="logo-si">ගුරු ගෙදර</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Browse</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Bestsellers</a></li>
+      <li><a href="#">Sinhala Books</a></li>
+      <li><a href="#">Children</a></li>
+      <li><a href="#">Offers</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="search-bar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search books, authors…">
+      </div>
+      <a href="#" class="nav-icon" title="Wishlist">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </a>
+      <a href="#" class="nav-icon" title="My Account">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <a href="#" class="nav-icon" title="Cart" style="position:relative;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge">3</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Sri Lanka's Favourite Bookstore</div>
+    <h1>Where Every Page<br>Tells a <em>Story</em></h1>
+    <p>From Sinhala classics to global bestsellers — discover over 80,000 titles delivered to your door across Sri Lanka.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn-primary">
+        Explore Books
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn-outline">Sinhala Collection</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="book-stack">
+      <div class="book-card mid b1">
+        <div class="book-spine"></div>
+        <div class="book-deco"></div>
+        <div class="book-title-mini">The Village in the Jungle</div>
+        <div class="book-author-mini">Leonard Woolf</div>
+      </div>
+      <div class="book-card tall b3">
+        <div class="book-spine"></div>
+        <div class="book-deco"></div>
+        <div class="book-title-mini">Reef</div>
+        <div class="book-author-mini">Romesh Gunesekera</div>
+      </div>
+      <div class="book-card mid b2">
+        <div class="book-spine"></div>
+        <div class="book-deco"></div>
+        <div class="book-title-mini">Running in the Family</div>
+        <div class="book-author-mini">Michael Ondaatje</div>
+      </div>
+      <div class="book-card short b4">
+        <div class="book-spine"></div>
+        <div class="book-deco"></div>
+        <div class="book-title-mini">Funny Boy</div>
+        <div class="book-author-mini">Shyam Selvadurai</div>
+      </div>
+      <div class="book-card mid b5">
+        <div class="book-spine"></div>
+        <div class="book-deco"></div>
+        <div class="book-title-mini">Anil's Ghost</div>
+        <div class="book-author-mini">Michael Ondaatje</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category strip -->
+<div class="cat-strip">
+  <div class="cat-strip-inner">
+    <a href="#" class="cat-item active">
+      <span class="cat-icon">📚</span>
+      <span class="cat-label">All Books</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">🏆</span>
+      <span class="cat-label">Bestsellers</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">✨</span>
+      <span class="cat-label">New Arrivals</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">📖</span>
+      <span class="cat-label">Fiction</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">🔬</span>
+      <span class="cat-label">Non-Fiction</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">👶</span>
+      <span class="cat-label">Children</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">📐</span>
+      <span class="cat-label">Academic</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">💼</span>
+      <span class="cat-label">Business</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">🧘</span>
+      <span class="cat-label">Self-Help</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">🌍</span>
+      <span class="cat-label">Travel</span>
+    </a>
+    <a href="#" class="cat-item">
+      <span class="cat-icon">🎨</span>
+      <span class="cat-label">Art &amp; Design</span>
+    </a>
+  </div>
+</div>
+
+<!-- Bestsellers -->
+<section>
+  <div class="inner">
+    <div class="section-head">
+      <h2 class="section-title">Bestsellers <span>This Week</span></h2>
+      <a href="#" class="see-all">View All →</a>
+    </div>
+    <div class="books-grid">
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #2c5f8c, #1a3a5c);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Atomic Habits</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">Atomic Habits</span>
+          <span class="book-author">James Clear</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>2,841</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 2,450</span>
+            <span class="book-price-old">Rs. 3,200</span>
+            <span class="book-badge">−23%</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #7b2d8a, #4a1a58);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">The Midnight Library</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">The Midnight Library</span>
+          <span class="book-author">Matt Haig</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>1,563</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 1,890</span>
+            <span class="book-badge new">New</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #7a3a1a, #4a1f0a);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Sapiens</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">Sapiens</span>
+          <span class="book-author">Yuval Noah Harari</span>
+          <div class="stars">★★★★☆</div>
+          <div class="sold-count">🛒 <strong>3,210</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 2,100</span>
+            <span class="book-price-old">Rs. 2,800</span>
+            <span class="book-badge">−25%</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #1e5c3a, #0f3322);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">The Alchemist</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">The Alchemist</span>
+          <span class="book-author">Paulo Coelho</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>4,075</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 1,650</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #3a3a6a, #20204a);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Educated</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">Educated</span>
+          <span class="book-author">Tara Westover</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>1,188</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 2,200</span>
+            <span class="book-price-old">Rs. 2,750</span>
+            <span class="book-badge">−20%</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #8a6a1e, #5a4008);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Think Again</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">Think Again</span>
+          <span class="book-author">Adam Grant</span>
+          <div class="stars">★★★★☆</div>
+          <div class="sold-count">🛒 <strong>942</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 2,350</span>
+            <span class="book-badge new">New</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Featured book banner -->
+<section style="padding: 0 24px 64px;">
+  <div class="inner">
+    <div class="featured-banner">
+      <div class="fb-content">
+        <div class="fb-tag">⭐ Editor's Pick · Book of the Month</div>
+        <div class="fb-title">The God of Small Things</div>
+        <div class="fb-author">Arundhati Roy</div>
+        <div class="fb-desc">A sweeping tale set in South Asia — a Booker Prize winner that continues to captivate readers worldwide. Explore themes of love, caste, and forbidden desire.</div>
+        <a href="#" class="fb-cta">
+          Add to Cart — Rs. 2,100
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="fb-visual">
+        <div class="fb-book">
+          <div class="fb-book-title">The God of<br>Small Things</div>
+          <div class="fb-book-author-mini">Arundhati Roy</div>
+          <div class="fb-price">Rs. 2,100</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Promo cards -->
+<section style="padding: 0 24px 64px;">
+  <div class="inner">
+    <div class="promos-grid">
+      <a href="#" class="promo-card c1">
+        <div class="promo-icon">🎒</div>
+        <div class="promo-title">Back to School</div>
+        <div class="promo-desc">Textbooks, stationery, and study guides at unbeatable prices.</div>
+        <div class="promo-link">Shop now →</div>
+      </a>
+      <a href="#" class="promo-card c2">
+        <div class="promo-icon">🎁</div>
+        <div class="promo-title">Gift a Book</div>
+        <div class="promo-desc">The perfect gift for any occasion — beautifully wrapped and delivered.</div>
+        <div class="promo-link">Find gifts →</div>
+      </a>
+      <a href="#" class="promo-card c3">
+        <div class="promo-icon">🔖</div>
+        <div class="promo-title">Reading Club</div>
+        <div class="promo-desc">Join Gurugedara's reading club for exclusive discounts and early access.</div>
+        <div class="promo-link" style="color: var(--forest);">Join free →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Sinhala Books -->
+<section class="sinhala-section">
+  <div class="inner">
+    <div class="section-head">
+      <h2 class="section-title">සිංහල <span>පොත්</span></h2>
+      <a href="#" class="see-all" style="color: var(--amber-light);">View All →</a>
+    </div>
+    <div class="books-grid">
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #8b2a1a, #5a1508);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Madol Doova</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">මඩොල් දූව</span>
+          <span class="book-author">Martin Wickremasinghe</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>5,340</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 890</span>
+            <span class="book-price-old">Rs. 1,200</span>
+            <span class="book-badge">−26%</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #1a4a2a, #0a2a16);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Gamperaliya</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">ගම්පෙරළිය</span>
+          <span class="book-author">Martin Wickremasinghe</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>4,890</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 760</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #2a2a6a, #141430);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Sansaraduk</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">සංසාරදුක</span>
+          <span class="book-author">Gunadasa Amarasekara</span>
+          <div class="stars">★★★★☆</div>
+          <div class="sold-count">🛒 <strong>2,107</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 680</span>
+            <span class="book-badge new">New</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #6a3a1a, #3a1a08);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Nidhanaya</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">නිධානය</span>
+          <span class="book-author">P. B. Alwis Perera</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>1,654</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 720</span>
+            <span class="book-price-old">Rs. 950</span>
+            <span class="book-badge">−24%</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #4a1a5a, #2a0a38);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Pavura</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">පාවුර</span>
+          <span class="book-author">Simon Nawagattegama</span>
+          <div class="stars">★★★★☆</div>
+          <div class="sold-count">🛒 <strong>987</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 590</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+      <a href="#" class="book-item">
+        <div class="book-cover" style="background: linear-gradient(145deg, #1a5a4a, #0a3028);">
+          <div class="cover-spine"></div>
+          <div class="book-cover-title">Beligala Sanda</div>
+        </div>
+        <div class="book-meta">
+          <span class="book-name">බෙලිගල සන්ද</span>
+          <span class="book-author">Karunasena Jayalath</span>
+          <div class="stars">★★★★★</div>
+          <div class="sold-count">🛒 <strong>1,230</strong> sold</div>
+          <div class="book-price-row">
+            <span class="book-price">Rs. 650</span>
+            <span class="book-badge new">New</span>
+          </div>
+        </div>
+        <button class="add-cart-btn">+ Add to Cart</button>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="inner">
+    <div class="section-head">
+      <h2 class="section-title">What Our <span>Readers</span> Say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Gurugedara has become my go-to for books. Fast delivery to Colombo, great selection of Sinhala literature, and the prices are unbeatable."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: #2c5545;">SK</div>
+          <div>
+            <div class="testi-name">Samantha Kumarasinghe</div>
+            <div class="testi-city">Colombo 07</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I ordered four textbooks for my son and they arrived the next day, well-packaged. Excellent customer service when I needed to check on the order."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: #8b5a07;">RP</div>
+          <div>
+            <div class="testi-name">Ranjith Perera</div>
+            <div class="testi-city">Kandy</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★☆</div>
+        <p class="testi-text">"Finally a Sri Lankan bookstore with a proper website! Great range of international titles at fair prices. The Sinhala classics section is wonderful."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: #5a3888;">NF</div>
+          <div>
+            <div class="testi-name">Nimasha Fernando</div>
+            <div class="testi-city">Galle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<div class="newsletter">
+  <div class="inner" style="max-width: 600px;">
+    <h2>Get the Latest from Gurugedara</h2>
+    <p>New arrivals, exclusive deals, and curated reading lists — straight to your inbox.</p>
+    <div class="nl-form">
+      <input type="email" placeholder="Your email address">
+      <button type="button">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-en" style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color: #c8a850;">Gurugedara</span>
+      <p>Sri Lanka's beloved online bookstore. We've been connecting readers with books since 2020 — over 80,000 titles in Sinhala, English, and Tamil.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">All Books</a></li>
+        <li><a href="#">Bestsellers</a></li>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Sinhala Books</a></li>
+        <li><a href="#">Children's Books</a></li>
+        <li><a href="#">Academic</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Delivery Info</a></li>
+        <li><a href="#">Returns Policy</a></li>
+        <li><a href="#">Track My Order</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Reading Club</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Sell With Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Gurugedara (Pvt) Ltd · Kurunegala, Sri Lanka</p>
+    <div class="payment-icons">
+      <span class="pay-icon">VISA</span>
+      <span class="pay-icon">MC</span>
+      <span class="pay-icon">COD</span>
+      <span class="pay-icon">eZ Cash</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
-
-
